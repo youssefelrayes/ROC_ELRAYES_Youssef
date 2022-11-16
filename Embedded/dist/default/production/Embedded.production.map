@@ -85,9 +85,9 @@ Default Scalar Model: Small
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0x154           0x1fe  (510)
-.text                        0x354                0xd2           0x13b  (315)
+.text                        0x354                0xd0           0x138  (312)
 
-                 Total "program" memory used (bytes):          0x339  (825) <1%
+                 Total "program" memory used (bytes):          0x336  (822) <1%
 
 
 "data" Memory  [Origin = 0x1000, Length = 0xc000]
@@ -122,13 +122,13 @@ External Symbols in Program Memory (by address):
                   0x000354                  _InitOscillator
                   0x0003aa                  _InitTimer23
                   0x0003dc                  _InitTimer1
-                  0x0003fa                  _InitIO
-                  0x000414                  _main
+                  0x0003f8                  _InitIO
+                  0x000412                  _main
                   0x0557fa                  __FGS.sec
 
 External Symbols in Program Memory (by name):
 
-                  0x0003fa                  _InitIO
+                  0x0003f8                  _InitIO
                   0x000354                  _InitOscillator
                   0x0003dc                  _InitTimer1
                   0x0003aa                  _InitTimer23
@@ -140,7 +140,7 @@ External Symbols in Program Memory (by name):
                   0x000248                  __data_init_extended
                   0x00023c                  __psv_init
                   0x000200                  __resetPRI
-                  0x000414                  _main
+                  0x000412                  _main
 
 Memory Configuration
 
@@ -239,7 +239,7 @@ __FOSCSEL
 
 __FGS             0x0557fa          0x2
  *(__FGS.sec*)
- __FGS.sec        0x0557fa          0x2 /CW/_FGS0§õ
+ __FGS.sec        0x0557fa          0x2 /CW/_FGSðfû
                   0x0557fa                  __FGS.sec
 
 __FUID0
@@ -2155,7 +2155,7 @@ LOAD c:/program files/microchip/xc16/v1.60/bin/bin/../../lib\libm-elf.a
 LOAD c:/program files/microchip/xc16/v1.60/bin/bin/../../lib\liblega-c-elf.a
 END GROUP
 OUTPUT(dist/default/production/Embedded.production.elf elf32-pic30)
-LOAD /CW/_FGS0§õ
+LOAD /CW/_FGSðfû
 LOAD default_isr
 
 .debug_pubtypes
@@ -2212,13 +2212,13 @@ __c30_signature
  .ivt._T1Interrupt
                   0x00001a          0x2 build/default/production/timer.o
 
-.text             0x000354         0xd2
+.text             0x000354         0xd0
  .text            0x000354         0x56 build/default/production/ChipConfig.o
                   0x000354                  _InitOscillator
- .text            0x0003aa         0x50 build/default/production/timer.o
+ .text            0x0003aa         0x4e build/default/production/timer.o
                   0x0003aa                  _InitTimer23
                   0x0003dc                  _InitTimer1
- .text            0x0003fa         0x1a build/default/production/IO.o
-                  0x0003fa                  _InitIO
- .text            0x000414         0x12 build/default/production/main.o
-                  0x000414                  _main
+ .text            0x0003f8         0x1a build/default/production/IO.o
+                  0x0003f8                  _InitIO
+ .text            0x000412         0x12 build/default/production/main.o
+                  0x000412                  _main
