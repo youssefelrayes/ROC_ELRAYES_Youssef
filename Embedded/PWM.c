@@ -29,7 +29,7 @@ FCLCON6 = 0x0003; //Désactive la gestion des faults
 PTCONbits.PTEN = 1;
 }
 
-void PWMSetSpeed(int m,float vitesseEnPourcents)
+void PWMSetSpeed(float vitesseEnPourcents,int m)
 {
     switch (m){
         case MOTEUR_GAUCHE:
