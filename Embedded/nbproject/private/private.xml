@@ -3,13 +3,20 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Github/SeaTech_Nom_Prenom-ou-IUT_ELRAYES_Youssef/Embedded/main.c</file>
-            <file>file:/C:/Github/SeaTech_Nom_Prenom-ou-IUT_ELRAYES_Youssef/Embedded/ChipConfig.c</file>
-            <file>file:/C:/Github/SeaTech_Nom_Prenom-ou-IUT_ELRAYES_Youssef/Embedded/ChipConfig.h</file>
+            <file>file:/C:/Github/SeaTech_Nom_Prenom-ou-IUT_ELRAYES_Youssef/Embedded/Robot.c</file>
             <file>file:/C:/Github/SeaTech_Nom_Prenom-ou-IUT_ELRAYES_Youssef/Embedded/IO.c</file>
-            <file>file:/C:/Github/SeaTech_Nom_Prenom-ou-IUT_ELRAYES_Youssef/Embedded/IO.h</file>
+            <file>file:/C:/Github/SeaTech_Nom_Prenom-ou-IUT_ELRAYES_Youssef/Embedded/PWM.c</file>
+            <file>file:/C:/Github/SeaTech_Nom_Prenom-ou-IUT_ELRAYES_Youssef/Embedded/main.c</file>
+            <file>file:/C:/Github/SeaTech_Nom_Prenom-ou-IUT_ELRAYES_Youssef/Embedded/nbproject/Makefile-impl.mk</file>
+            <file>file:/C:/Github/SeaTech_Nom_Prenom-ou-IUT_ELRAYES_Youssef/Embedded/ToolBox.h</file>
+            <file>file:/C:/Github/SeaTech_Nom_Prenom-ou-IUT_ELRAYES_Youssef/Embedded/Robot.h</file>
+            <file>file:/C:/Github/SeaTech_Nom_Prenom-ou-IUT_ELRAYES_Youssef/Embedded/ChipConfig.h</file>
             <file>file:/C:/Github/SeaTech_Nom_Prenom-ou-IUT_ELRAYES_Youssef/Embedded/timer.c</file>
+            <file>file:/C:/Github/SeaTech_Nom_Prenom-ou-IUT_ELRAYES_Youssef/Embedded/IO.h</file>
             <file>file:/C:/Github/SeaTech_Nom_Prenom-ou-IUT_ELRAYES_Youssef/Embedded/timer.h</file>
+            <file>file:/C:/Github/SeaTech_Nom_Prenom-ou-IUT_ELRAYES_Youssef/Embedded/ToolBox.c</file>
+            <file>file:/C:/Github/SeaTech_Nom_Prenom-ou-IUT_ELRAYES_Youssef/Embedded/ChipConfig.c</file>
+            <file>file:/C:/Github/SeaTech_Nom_Prenom-ou-IUT_ELRAYES_Youssef/Embedded/PWM.h</file>
         </group>
     </open-files>
 </project-private>

@@ -15,6 +15,8 @@
 #include "ToolBox.h"
 #include "PWM.h"
 
+
+
 int main(void) {
     /***************************************************************************************************/
     //Initialisation de l?oscillateur
@@ -25,7 +27,7 @@ int main(void) {
     // Configuration des entrées sorties
     /****************************************************************************************************/
     InitIO();
-    
+
     InitTimer23();
     InitTimer1();
     InitPWM();
@@ -44,12 +46,7 @@ int main(void) {
     while (1) {
      //LED_BLANCHE = !LED_BLANCHE;
         
-    PWMSetSpeed(20,MOTEUR_DROIT);
-    PWMSetSpeed(20,MOTEUR_GAUCHE);
-  
- 
-
-   
+     //PWMSetSpeedConsigne(-20,MOTEUR_GAUCHE);
         
     } // fin main
 }
