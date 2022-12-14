@@ -31,6 +31,7 @@ int main(void) {
     InitTimer23();
     InitTimer1();
     InitPWM();
+    InitADC1();
     
     /*
     LED_BLANCHE = 1;

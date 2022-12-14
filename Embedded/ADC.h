@@ -8,9 +8,7 @@
 #ifndef ADC_H
 #define	ADC_H
 
-unsigned char ADCResultIndex = 0;
-static unsigned int ADCResult[4];
-unsigned char ADCConversionFinishedFlag;
+
 
 void InitADC1(void);
 void __attribute__((interrupt, no_auto_psv)) _AD1Interrupt(void);
