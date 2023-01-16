@@ -7,9 +7,8 @@
 
 
 #include <xc.h>
-
 #include "IO.h"
-
+#include "main.h"
 
 
 void InitIO()
@@ -55,7 +54,9 @@ void InitIO()
     _TRISC6 = 0;
     
     _TRISC7 = 0;  
-    //********** Configuration des entrées : _TRISxx = 1 ********************************   
+    //********** Configuration des entrées : _TRISxx = 1 ********************************
+  
+   
 
     
 

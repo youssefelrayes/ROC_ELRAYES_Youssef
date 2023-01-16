@@ -1,5 +1,6 @@
 #include <xc.h>
 #include "ADC.h"
+#include "main.h"
 
 
 unsigned char ADCResultIndex = 0;

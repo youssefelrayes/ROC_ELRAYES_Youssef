@@ -3,6 +3,7 @@
 #include "PWM.h"
 #include "Robot.h"
 #include "ToolBox.h"
+#include "main.h"
 
 #define PWMPER 40.0
 unsigned char acceleration = 1;
