@@ -24,7 +24,7 @@
             <TextBox x:Name="textBoxEmission" TextWrapping="Wrap" Background="{x:Null}" BorderBrush="{x:Null}" AcceptsReturn="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         </GroupBox>
         <GroupBox Header="Reception" Background="#FFDDDDDD" Width="auto" Height="auto" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <TextBox x:Name="RichTextBox" TextWrapping="Wrap" Background="{x:Null}" BorderBrush="{x:Null}" AcceptsReturn="True" IsReadOnly="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            <TextBox x:Name="textBoxReception" TextWrapping="Wrap" Background="{x:Null}" BorderBrush="{x:Null}" AcceptsReturn="True" IsReadOnly="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         </GroupBox>
 
         <Button x:Name="buttonEnvoyer" Content="Envoyer" HorizontalAlignment="center" VerticalAlignment="center" Width="100" Click="buttonEnvoyer_Click" Height="30" Grid.Row="2" Grid.Column="1"/>

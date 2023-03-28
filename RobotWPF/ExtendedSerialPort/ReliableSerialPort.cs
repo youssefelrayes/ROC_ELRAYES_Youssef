@@ -1,5 +1,4 @@
-﻿using EventArgsLibrary;
-using System;
+﻿using System;
 using System.IO.Ports;
 using System.Management;
 using System.Text.RegularExpressions;
@@ -9,7 +8,6 @@ namespace ExtendedSerialPort
 {
     public class ReliableSerialPort : SerialPort
     {
-
         private Thread connectionThread;
         private bool IsSerialPortConnected = false;
         //private String PortName;
@@ -150,14 +148,14 @@ namespace ExtendedSerialPort
         }
 
         //Input events
-        public void SendMessage(object sender, EventArgsLibrary.MessageEncodedArgs e)
+        public void SendMessage(object sender, byte[] msg)
         {
             if (IsSerialPortConnected)
             {
                 try
                 {
                     //Quand on reçoit un message à envoyer, on le fait partir
-                    Write(e.Msg, 0, e.Msg.Length);
+                    Write(msg, 0, msg.Length);
                     //Console.WriteLine("Message sent:" + DateTime.Now.Millisecond.ToString());
                 }
                 catch
@@ -170,7 +168,7 @@ namespace ExtendedSerialPort
             }
         }
 
-        //********************************************** Output events **********************************************************************************//
+        ////********************************************** Output events **********************************************************************************//
         public delegate void DataReceivedEventHandler(object sender, DataReceivedArgs e);
         public event EventHandler<DataReceivedArgs> OnDataReceivedEvent;
         public virtual void OnDataReceived(byte[] data)
@@ -180,6 +178,11 @@ namespace ExtendedSerialPort
             {
                 handler(this, new DataReceivedArgs { Data = data });
             }
-        }        
+        }
+    }
+
+    public class DataReceivedArgs : EventArgs
+    {
+        public byte[] Data;
     }
 }
