@@ -112,7 +112,8 @@ namespace RobotInterface
                 byteList[i] = (byte)(2 * i);
             }
             serialPort1.Write(byteList, 0, byteList.Length);
-            
+            textBoxEmission.Clear();
+
 
         }
     }
