@@ -37,7 +37,7 @@ namespace RobotInterface
         {
             InitializeComponent();
 
-            serialPort1 = new ReliableSerialPort("COM8", 115200, System.IO.Ports.Parity.None, 8, System.IO.Ports.StopBits.One);
+            serialPort1 = new ReliableSerialPort("COM6", 115200, System.IO.Ports.Parity.None, 8, System.IO.Ports.StopBits.One);
             serialPort1.OnDataReceivedEvent += SerialPort1_OnDataReceivedEvent;
             serialPort1.Open();
 
