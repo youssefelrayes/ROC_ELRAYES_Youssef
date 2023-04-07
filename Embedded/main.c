@@ -55,7 +55,7 @@ int main(void) {
     /****************************************************************************************************/
     while (1) {
         
-    /*
+  
     int i;
     for(i=0; i< CB_RX1_GetDataSize(); i++)
     {
@@ -64,12 +64,12 @@ int main(void) {
     }
     __delay32(1000);
 
-     */
+   
         
         
         //SendMessageDirect((unsigned char*) "Bonjour", 7);
-        SendMessage((unsigned char*) "Bonjour", 7);
-        __delay32(40000000);
+        //SendMessage((unsigned char*) "Bonjour", 7);
+        //__delay32(40000000);
 
 
     /*
