@@ -37,7 +37,7 @@ namespace RobotInterface
         {
             InitializeComponent();
 
-            serialPort1 = new ReliableSerialPort("COM6", 115200, System.IO.Ports.Parity.None, 8, System.IO.Ports.StopBits.One);
+            serialPort1 = new ReliableSerialPort("COM8", 115200, System.IO.Ports.Parity.None, 8, System.IO.Ports.StopBits.One);
             serialPort1.OnDataReceivedEvent += SerialPort1_OnDataReceivedEvent;
             serialPort1.Open();
 
@@ -107,15 +107,41 @@ namespace RobotInterface
         byte[] byteList = new byte[20];
         private void Test_Click(object sender, RoutedEventArgs e)
         {
+            /*
             for (int i = 0; i < 20; i++)
             {
                 byteList[i] = (byte)(2 * i);
             }
-            serialPort1.Write(byteList, 0, byteList.Length);
+            */
+
+            int f = 0x0080;
+            byte[] payload = new byte[20];
+            int payload_length = payload.Length;
+            UartEncodeAndSendMessage(f, payload_length, payload);
+
             textBoxEmission.Clear();
-
-
         }
+        
+        byte CalculateChecksum(int msgFunction,int msgPayloadLength, byte[] msgPayload)
+        {
+
+            string Sum = "FE" + msgFunction.ToString("X") + msgPayloadLength.ToString("X") + BitConverter.ToString(msgPayload);
+            string Sub = Sum.Substring("FF".Length);
+            byte Checksum = Convert.ToByte(Sub);
+            return Checksum;
+        }
+
+        void UartEncodeAndSendMessage(int msgFunction, int msgPayloadLength, byte[] msgPayload)
+        {
+            byte CheckSum = CalculateChecksum(msgFunction, msgPayloadLength, msgPayload);
+            serialPort1.WriteLine("FE" + msgFunction.ToString() + msgPayloadLength.ToString() + BitConverter.ToString(msgPayload) + Convert.ToString(CheckSum));
+        }
+        
+
+
+
+
+
     }
 
    

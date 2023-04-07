@@ -3,12 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/TP_EO_6/Desktop/ROC_ELRAYES_Youssef/Embedded/main.c</file>
-            <file>file:/C:/Users/TP_EO_6/Desktop/ROC_ELRAYES_Youssef/Embedded/CB_RX1.c</file>
-            <file>file:/C:/Users/TP_EO_6/Desktop/ROC_ELRAYES_Youssef/Embedded/UART.c</file>
-            <file>file:/C:/Users/TP_EO_6/Desktop/ROC_ELRAYES_Youssef/Embedded/CB_TX1.c</file>
-            <file>file:/C:/Users/TP_EO_6/Desktop/ROC_ELRAYES_Youssef/Embedded/CB_TX1.h</file>
-            <file>file:/C:/Users/TP_EO_6/Desktop/ROC_ELRAYES_Youssef/Embedded/CB_RX1.h</file>
+            <file>file:/C:/Github/ROC_ELRAYES_Youssef/Embedded/CB_TX1.c</file>
+            <file>file:/C:/Github/ROC_ELRAYES_Youssef/Embedded/main.c</file>
+            <file>file:/C:/Github/ROC_ELRAYES_Youssef/Embedded/CB_RX1.c</file>
+            <file>file:/C:/Github/ROC_ELRAYES_Youssef/Embedded/CB_RX1.h</file>
+            <file>file:/C:/Github/ROC_ELRAYES_Youssef/Embedded/CB_TX1.h</file>
         </group>
     </open-files>
 </project-private>
