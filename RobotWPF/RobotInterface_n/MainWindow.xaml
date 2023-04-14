@@ -8,28 +8,73 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="30"/>
             <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="30"/>
             <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="30"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
-        <GroupBox Header="Emission" Background="#FFDDDDDD" Width="auto" Height="auto" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <GroupBox Header="Emission" Background="#FFDDDDDD" Width="auto" Height="auto" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5">
             <TextBox x:Name="textBoxEmission" TextWrapping="Wrap" Background="{x:Null}" BorderBrush="{x:Null}" AcceptsReturn="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         </GroupBox>
-        <GroupBox Header="Reception" Background="#FFDDDDDD" Width="auto" Height="auto" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <GroupBox Header="Reception" Background="#FFDDDDDD" Width="auto" Height="auto" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Margin="5">
             <TextBox x:Name="textBoxReception" TextWrapping="Wrap" Background="{x:Null}" BorderBrush="{x:Null}" AcceptsReturn="True" IsReadOnly="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         </GroupBox>
 
-        <Button x:Name="buttonEnvoyer" Content="Envoyer" HorizontalAlignment="center" VerticalAlignment="center" Width="100" Click="buttonEnvoyer_Click" Height="30" Grid.Row="2" Grid.Column="1"/>
-        <Button x:Name="Test" Content="Test" HorizontalAlignment="center" VerticalAlignment="center" Width="100" Click="Test_Click" Height="30" Grid.Row="2" Grid.Column="3"/>
+        <Button x:Name="buttonEnvoyer" Content="Envoyer" HorizontalAlignment="center" VerticalAlignment="center" Width="100" Click="buttonEnvoyer_Click" Height="30" Grid.Row="1" Grid.Column="0"/>
+        <Button x:Name="Test" Content="Test" HorizontalAlignment="center" VerticalAlignment="center" Width="100" Click="Test_Click" Height="30" Grid.Row="1" Grid.Column="1"/>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="2">
+            <GroupBox Header="Leds" Width="200">
+                <StackPanel Orientation="Vertical">
+                    <CheckBox Content="Led1" x:Name="checkBoxLed1"/>
+                    <CheckBox Content="Led2" x:Name="checkBoxLed2"/>
+                    <CheckBox Content="Led3" x:Name="checkBoxLed3"/>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="Télémètres IR" Width="200">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="IR Gauche : "/>
+                        <Label x:Name="IR_Gauche" />
+                        <Label Content="cm" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="IR Centre : "/>
+                        <Label x:Name="IR_Centre"/>
+                        <Label Content="cm" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="IR Droit : " />
+                        <Label x:Name="IR_Droit"  />
+                        <Label Content="cm" />
+                    </StackPanel>
 
 
+                </StackPanel>
+                
+
+
+            </GroupBox>
+          
+            <GroupBox Header="Moteurs" Width="200">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Vitesse Gauche : "/>
+                        <Label x:Name="Moteur_Gauche"/>
+                        <Label Content="%" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Vitesse Doit : " />
+                        <Label x:Name="Moteur_Droit"  />
+                        <Label Content="%" />
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
     </Grid>
 </Window>
