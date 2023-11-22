@@ -28,7 +28,7 @@ extern void TacheLCD_init(void);
 #define TACHELCD_TASK_PRIORITY 1
 #define TACHELCD_TASK_STACK_SIZE 1024
 Task_Struct TacheLCD;
-uint8_t TacheLCDStack[TACHELCD_TASK_STACK_SIZE]
+uint8_t TacheLCDStack[TACHELCD_TASK_STACK_SIZE];
 Semaphore_Struct semTacheLCDStruct;
 Semaphore_Handle semTacheLCDHandle;
 
@@ -93,7 +93,7 @@ void intToString(char* ax, float AX){
     strcat(ax,convert);
 }
 
-static void TacheADC_taskFxn(UArg a0, UArg a1){
+static void TacheLCD_taskFxn(UArg a0, UArg a1){
     TacheLCD_init();
 
     char DataLCD[] = "AX : ";
