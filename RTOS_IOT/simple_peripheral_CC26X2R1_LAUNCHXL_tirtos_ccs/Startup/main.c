@@ -77,6 +77,7 @@ icall_userCfg_t user0Cfg = BLE_USER_CFG;
 
 #include <TacheADC/TacheADC.h>
 #include <TacheLCD/TacheLCD.h>
+#include <Profiles/Accelerometre.h>
 
 
 /*******************************************************************************

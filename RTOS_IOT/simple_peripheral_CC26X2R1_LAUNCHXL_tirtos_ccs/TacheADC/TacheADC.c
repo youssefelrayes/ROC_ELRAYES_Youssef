@@ -19,6 +19,9 @@
 #include <ti/drivers/GPIO.h>
 #include <ti_drivers_config.h>
 #include <ti/drivers/ADC.h>
+#include <TacheLCD/TacheLCD.h>
+#include <Profiles/Accelerometre.h>
+#include <Application/simple_peripheral.h>
 
 #define ADC_SAMPLE_COUNT (10)
 #define TACHEADC_TASK_PRIORITY 1
@@ -74,6 +77,8 @@ extern void TacheADC_init(void)
                     Clock_start(Clock_handle(&myClock));//Timer start
 }
 
+float accx, accy, accz;
+
 static void TacheADC_taskFxn(UArg a0, UArg a1)
 {
     TacheADC_init();
@@ -90,6 +95,10 @@ static void TacheADC_taskFxn(UArg a0, UArg a1)
             Sampling(CONFIG_ADC_0);
             Sampling(CONFIG_ADC_1);
             Sampling(CONFIG_ADC_2);
+
+            SaveDataToSend(accx, accy, accz);
+            Carte_enqueueMsg(PZ_MSG_ACCELEROMETRE, NULL);
+            afficherDonnees(accx, accy, accz);
         }
 
     }
@@ -112,7 +121,7 @@ void TacheADC_CreateTask(void){
     semTacheADCHandle = Semaphore_handle(&semTacheADCStruct);
 }
 
-
+float Vaccx, Vaccy, Vaccz;
 void Sampling(uint_least8_t Board_ADC_Number)
 {
     adc = ADC_open(Board_ADC_Number, &params);
@@ -124,6 +133,19 @@ void Sampling(uint_least8_t Board_ADC_Number)
     res = ADC_convert(adc, &adcValue1[i]);
     if (res == ADC_STATUS_SUCCESS){
         adcValue1MicroVolt[i] = ADC_convertRawToMicroVolts(adc, adcValue1[i]);
+        if (Board_ADC_Number == CONFIG_ADC_0 ){
+            Vaccx = adcValue1MicroVolt[i] / 1000000.0;
+            accx = (9.81 / 0.66) * (Vaccx - 1.65);
+        }
+        if (Board_ADC_Number == CONFIG_ADC_1 ){
+            Vaccy = adcValue1MicroVolt[i] / 1000000.0;
+            accy = (9.81 / 0.66) * (Vaccy - 1.65);
+        }
+        if (Board_ADC_Number == CONFIG_ADC_2 ){
+            Vaccz = adcValue1MicroVolt[i] / 1000000.0;
+            accz = (9.81 / 0.66) * (Vaccz - 1.65);
+        }
+
         }
     }
     ADC_close(adc);

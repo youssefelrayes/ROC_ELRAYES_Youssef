@@ -69,7 +69,7 @@ extern "C"
 /*********************************************************************
  * MACROS
  */
-
+#define PZ_MSG_ACCELEROMETRE 10
 /*********************************************************************
  * FUNCTIONS
  */
@@ -90,6 +90,8 @@ bool SimplePeripheral_doAutoConnect(uint8_t index);
 
 /* Actions for Menu: Set PHY - Select */
 bool SimplePeripheral_doSetConnPhy(uint8 index);
+
+void Carte_enqueueMsg(uint8_t event, uint8_t pData);
 
 /*********************************************************************
 *********************************************************************/

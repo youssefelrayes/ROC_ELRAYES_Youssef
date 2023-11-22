@@ -113,11 +113,12 @@ static void TacheLCD_taskFxn(UArg a0, UArg a1){
         char azDataLCD[10] = " ";
 
         floatToString1d(axDataLCD,Ax);
-        floatToString1d(axDataLCD,Ay);
-        floatToString1d(axDataLCD,Az);
-        OLEDText22(8, 8, DataLCD, SIZE_TWO, 0xFF, 0xFF, 0x00);
-        OLEDText22(8, 33, DataLCD2, SIZE_TWO, 0xFF, 0xFF, 0x00);
-        OLEDText22(8, 58, DataLCD3, SIZE_TWO, 0xFF, 0xFF, 0x00);
+        floatToString1d(ayDataLCD,Ay);
+        floatToString1d(azDataLCD,Az);
+
+        OLEDText22(45, 8, axDataLCD, SIZE_TWO, 0xFF, 0xFF, 0x00);
+        OLEDText22(45, 33, ayDataLCD, SIZE_TWO, 0xFF, 0xFF, 0x00);
+        OLEDText22(45, 58, azDataLCD, SIZE_TWO, 0xFF, 0xFF, 0x00);
     }
 }
 
