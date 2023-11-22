@@ -24,6 +24,7 @@
 #include <Application/simple_peripheral.h>
 
 #define ADC_SAMPLE_COUNT (10)
+#define ADC_SAMPLE_COUNT_JOY (50)
 #define TACHEADC_TASK_PRIORITY 1
 #define TACHEADC_TASK_STACK_SIZE 1024
 Task_Struct TacheADC;
@@ -77,7 +78,7 @@ extern void TacheADC_init(void)
                     Clock_start(Clock_handle(&myClock));//Timer start
 }
 
-float accx, accy, accz;
+float accx, accy, accz, VjoyVer, VjoyHor;
 
 static void TacheADC_taskFxn(UArg a0, UArg a1)
 {
@@ -96,9 +97,17 @@ static void TacheADC_taskFxn(UArg a0, UArg a1)
             Sampling(CONFIG_ADC_1);
             Sampling(CONFIG_ADC_2);
 
-            SaveDataToSend(accx, accy, accz);
-            Carte_enqueueMsg(PZ_MSG_ACCELEROMETRE, NULL);
+            Sampling(JOY_VER);
+            Sampling(JOY_HOR);
+
+
+
+            //SaveDataToSend(accx, accy, accz);
+            //Carte_enqueueMsg(PZ_MSG_ACCELEROMETRE, NULL);
             afficherDonnees(accx, accy, accz);
+            afficherDonneesJoy(VjoyVer, VjoyHor);
+
+
         }
 
     }
@@ -124,10 +133,32 @@ void TacheADC_CreateTask(void){
 float Vaccx, Vaccy, Vaccz;
 void Sampling(uint_least8_t Board_ADC_Number)
 {
+
     adc = ADC_open(Board_ADC_Number, &params);
     if (adc == NULL){
         while (1);
         }
+
+    if (Board_ADC_Number == JOY_VER || Board_ADC_Number == JOY_HOR)
+    {
+        for (i = 0; i < ADC_SAMPLE_COUNT_JOY; i++)
+        {
+        res = ADC_convert(adc, &adcValue1[i]);
+        if (res == ADC_STATUS_SUCCESS){
+            adcValue1MicroVolt[i] = ADC_convertRawToMicroVolts(adc, adcValue1[i]);
+            if (Board_ADC_Number == JOY_VER ){
+                VjoyVer = adcValue1MicroVolt[i] / 1000000.0;
+            }
+            if (Board_ADC_Number == JOY_HOR ){
+                VjoyHor = adcValue1MicroVolt[i] / 1000000.0;
+            }
+
+            }
+        }
+    }
+
+    else{
+
     for (i = 0; i < ADC_SAMPLE_COUNT; i++)
     {
     res = ADC_convert(adc, &adcValue1[i]);
@@ -148,6 +179,8 @@ void Sampling(uint_least8_t Board_ADC_Number)
 
         }
     }
+    }
+
     ADC_close(adc);
 }
 

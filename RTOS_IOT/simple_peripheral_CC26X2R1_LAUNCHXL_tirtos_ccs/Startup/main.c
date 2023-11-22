@@ -157,7 +157,7 @@ int main()
   NPITask_createTask(ICALL_SERVICE_CLASS_BLE);
 #endif // PTM_MODE
 
-  SimplePeripheral_createTask();
+  //SimplePeripheral_createTask();
   TacheADC_CreateTask();
   TacheLCD_CreateTask();
   /* enable interrupts and start SYS/BIOS */

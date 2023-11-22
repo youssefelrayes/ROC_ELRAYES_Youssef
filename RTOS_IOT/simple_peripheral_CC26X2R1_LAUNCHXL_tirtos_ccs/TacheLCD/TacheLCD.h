@@ -10,6 +10,7 @@
 
 
 void afficherDonnees(float accx, float accy, float accz);
+void afficherDonneesJoy(float VjoyVer, float VjoyHor);
 void TacheLCD_CreateTask(void);;
 
 

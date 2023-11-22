@@ -36,12 +36,17 @@ void LCD_Init(void);
 void floatToString(char* ax, float AX);
 void floatToString1d(char* ax, float AX);
 void intToString(char* ax, float AX);
-float Ax,Ay,Az;
+float Ax,Ay,Az,Jv,Jh;
 
 void afficherDonnees(float accx, float accy, float accz){
     Ax = accx;
     Ay = accy;
     Az = accz;
+    Semaphore_post(semTacheLCDHandle);
+}
+void afficherDonneesJoy(float VjoyVer, float VjoyHor){
+    Jv = VjoyVer;
+    Jh = VjoyHor;
     Semaphore_post(semTacheLCDHandle);
 }
 
@@ -100,10 +105,15 @@ static void TacheLCD_taskFxn(UArg a0, UArg a1){
     char DataLCD2[] = "AY : ";
     char DataLCD3[] = "AZ : ";
 
+    char DataLCD4[] = "Jv : ";
+    char DataLCD5[] = "Jh : ";
+
     Fill_LCD(0xFF, 0x00, 0x00);
     OLEDText22(8, 8, DataLCD, SIZE_TWO, 0xFF, 0xFF, 0x00);
     OLEDText22(8, 33, DataLCD2, SIZE_TWO, 0xFF, 0xFF, 0x00);
     OLEDText22(8, 58, DataLCD3, SIZE_TWO, 0xFF, 0xFF, 0x00);
+    OLEDText22(8, 88, DataLCD4, SIZE_TWO, 0xFF, 0xFF, 0x00);
+    OLEDText22(8, 108, DataLCD5, SIZE_TWO, 0xFF, 0xFF, 0x00);
 
     for(;;){
         Semaphore_pend(semTacheLCDHandle, BIOS_WAIT_FOREVER);
@@ -112,13 +122,22 @@ static void TacheLCD_taskFxn(UArg a0, UArg a1){
         char ayDataLCD[10] = " ";
         char azDataLCD[10] = " ";
 
+        char JvDataLCD[50] = " ";
+        char JhDataLCD[50] = " ";
+
         floatToString1d(axDataLCD,Ax);
         floatToString1d(ayDataLCD,Ay);
         floatToString1d(azDataLCD,Az);
 
+        floatToString1d(JvDataLCD,Jv);
+        floatToString1d(JhDataLCD,Jh);
+
+
         OLEDText22(45, 8, axDataLCD, SIZE_TWO, 0xFF, 0xFF, 0x00);
         OLEDText22(45, 33, ayDataLCD, SIZE_TWO, 0xFF, 0xFF, 0x00);
         OLEDText22(45, 58, azDataLCD, SIZE_TWO, 0xFF, 0xFF, 0x00);
+        OLEDText22(45, 88, DataLCD4, SIZE_TWO, 0xFF, 0xFF, 0x00);
+        OLEDText22(45, 108, DataLCD5, SIZE_TWO, 0xFF, 0xFF, 0x00);
     }
 }
 
