@@ -10,6 +10,7 @@
 
 
 void afficherDonnees(float accx, float accy, float accz);
+void TacheLCD_CreateTask(void);;
 
 
 #endif /* TACHELCD_TACHELCD_H_ */
