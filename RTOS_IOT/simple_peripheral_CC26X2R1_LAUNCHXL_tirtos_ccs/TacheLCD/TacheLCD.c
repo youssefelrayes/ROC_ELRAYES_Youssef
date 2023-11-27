@@ -45,8 +45,8 @@ void afficherDonnees(float accx, float accy, float accz){
     Semaphore_post(semTacheLCDHandle);
 }
 void afficherDonneesJoy(float VjoyVer, float VjoyHor){
-    Jv = VjoyVer;
-    Jh = VjoyHor;
+    Jv = VjoyVer ;
+    Jh = VjoyHor ;
     Semaphore_post(semTacheLCDHandle);
 }
 
@@ -136,8 +136,8 @@ static void TacheLCD_taskFxn(UArg a0, UArg a1){
         OLEDText22(45, 8, axDataLCD, SIZE_TWO, 0xFF, 0xFF, 0x00);
         OLEDText22(45, 33, ayDataLCD, SIZE_TWO, 0xFF, 0xFF, 0x00);
         OLEDText22(45, 58, azDataLCD, SIZE_TWO, 0xFF, 0xFF, 0x00);
-        OLEDText22(45, 88, DataLCD4, SIZE_TWO, 0xFF, 0xFF, 0x00);
-        OLEDText22(45, 108, DataLCD5, SIZE_TWO, 0xFF, 0xFF, 0x00);
+        OLEDText22(45, 88, JvDataLCD, SIZE_TWO, 0xFF, 0xFF, 0x00);
+        OLEDText22(45, 108, JhDataLCD, SIZE_TWO, 0xFF, 0xFF, 0x00);
     }
 }
 

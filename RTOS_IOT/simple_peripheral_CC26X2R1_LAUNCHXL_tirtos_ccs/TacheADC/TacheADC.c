@@ -24,7 +24,7 @@
 #include <Application/simple_peripheral.h>
 
 #define ADC_SAMPLE_COUNT (10)
-#define ADC_SAMPLE_COUNT_JOY (50)
+
 #define TACHEADC_TASK_PRIORITY 1
 #define TACHEADC_TASK_STACK_SIZE 1024
 Task_Struct TacheADC;
@@ -72,13 +72,14 @@ extern void TacheADC_init(void)
     ADC_Params_init(&params);
     Clock_Params clockParams;
     Clock_Params_init(&clockParams);
-    clockParams.period = 100 * (1000/Clock_tickPeriod),//100ms
+    clockParams.period = 20 * (1000/Clock_tickPeriod),//100ms
     Clock_construct(&myClock, myClockSwiFxn,0, // Initial delay before first timeout
                     &clockParams);
                     Clock_start(Clock_handle(&myClock));//Timer start
 }
 
-float accx, accy, accz, VjoyVer, VjoyHor;
+float accx, accy, accz, joyVer, joyHor;
+int count = 0;
 
 static void TacheADC_taskFxn(UArg a0, UArg a1)
 {
@@ -93,19 +94,25 @@ static void TacheADC_taskFxn(UArg a0, UArg a1)
             */
             //Le semaphore est poste par le timer myClock
             Semaphore_pend(semTacheADCHandle, BIOS_WAIT_FOREVER);
+
+            if (count >= 5)
+            {
             Sampling(CONFIG_ADC_0);
             Sampling(CONFIG_ADC_1);
             Sampling(CONFIG_ADC_2);
+            count = 0;
+            }
+            count++;
 
             Sampling(JOY_VER);
             Sampling(JOY_HOR);
 
 
 
-            //SaveDataToSend(accx, accy, accz);
-            //Carte_enqueueMsg(PZ_MSG_ACCELEROMETRE, NULL);
+            SaveDataToSend(accx*100, accy*100, accz*100, joyVer*10, joyHor*10);
+            Carte_enqueueMsg(PZ_MSG_ACCELEROMETRE, NULL);
             afficherDonnees(accx, accy, accz);
-            afficherDonneesJoy(VjoyVer, VjoyHor);
+            afficherDonneesJoy(joyVer, joyHor);
 
 
         }
@@ -130,7 +137,7 @@ void TacheADC_CreateTask(void){
     semTacheADCHandle = Semaphore_handle(&semTacheADCStruct);
 }
 
-float Vaccx, Vaccy, Vaccz;
+float Vaccx, Vaccy, Vaccz, VjoyVer, VjoyHor;
 void Sampling(uint_least8_t Board_ADC_Number)
 {
 
@@ -141,16 +148,18 @@ void Sampling(uint_least8_t Board_ADC_Number)
 
     if (Board_ADC_Number == JOY_VER || Board_ADC_Number == JOY_HOR)
     {
-        for (i = 0; i < ADC_SAMPLE_COUNT_JOY; i++)
+        for (i = 0; i < ADC_SAMPLE_COUNT; i++)
         {
         res = ADC_convert(adc, &adcValue1[i]);
         if (res == ADC_STATUS_SUCCESS){
             adcValue1MicroVolt[i] = ADC_convertRawToMicroVolts(adc, adcValue1[i]);
             if (Board_ADC_Number == JOY_VER ){
                 VjoyVer = adcValue1MicroVolt[i] / 1000000.0;
+                joyVer =  (VjoyVer / 3.3) * 100.0;
             }
             if (Board_ADC_Number == JOY_HOR ){
                 VjoyHor = adcValue1MicroVolt[i] / 1000000.0;
+                joyHor =  (VjoyHor / 3.3) * 100.0;
             }
 
             }
@@ -183,5 +192,7 @@ void Sampling(uint_least8_t Board_ADC_Number)
 
     ADC_close(adc);
 }
+
+
 
 

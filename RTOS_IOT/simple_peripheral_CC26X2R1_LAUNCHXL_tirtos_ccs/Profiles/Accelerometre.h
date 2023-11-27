@@ -77,7 +77,7 @@ extern "C"
 #define ACCELEROMETRE_ACCELEROMETREMESURES_LEN  20
 
 void SendAccelerometreMesure(void);
-void SaveDataToSend(float AxADC, float AyADC, float AzADC);
+void SaveDataToSend(float AxADC, float AyADC, float AzADC, float JvADC, float JhADC);
 
 /*********************************************************************
  * TYPEDEFS
