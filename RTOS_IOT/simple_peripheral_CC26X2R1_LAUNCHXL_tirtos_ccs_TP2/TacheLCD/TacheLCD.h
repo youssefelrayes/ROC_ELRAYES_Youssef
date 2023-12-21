@@ -11,6 +11,7 @@
 
 void afficherDonnees(float accx, float accy, float accz);
 void afficherDonneesJoy(float VjoyVer, float VjoyHor);
+void afficherDonneesLux(float sensorData);
 void TacheLCD_CreateTask(void);;
 
 

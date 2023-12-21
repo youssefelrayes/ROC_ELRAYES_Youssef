@@ -159,8 +159,9 @@ int main()
 #endif // PTM_MODE
 
   //SimplePeripheral_createTask();
-  //TacheADC_CreateTask();
+  TacheADC_CreateTask();
   TacheLCD_CreateTask();
+  TacheI2C_CreateTask();
   /* enable interrupts and start SYS/BIOS */
   BIOS_start();
 

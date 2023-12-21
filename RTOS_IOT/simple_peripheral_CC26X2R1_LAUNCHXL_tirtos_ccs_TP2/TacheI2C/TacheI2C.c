@@ -56,6 +56,7 @@
 #include <ti_drivers_config.h>
 #include <TacheLCD/TacheLCD.h>
 #include <driverlib/ssi.h>
+#include "math.h"
 
 
 /* Driver configuration */
@@ -87,28 +88,131 @@ static const struct {
     uint8_t address;
     uint8_t resultReg;
     char *id;
-} sensors = {
-    { OPT3001_LAUNCHPAD_ADDR,  OPT_RESULT_REG, "3001" }
-};
+} sensors = {OPT3001_LAUNCHPAD_ADDR,  OPT_RESULT_REG, "3001"};
 
 static uint8_t slaveAddress;
-static Display_Handle display;
-
-static void i2cErrorHandler(I2C_Transaction *transaction,
-    Display_Handle display);
-
-/*
- *  ======== mainThread ========
- */
-uint16_t dataSensor;
+char dataSensor;
 
 
+uint8_t         txBuffer[10];
+uint8_t         rxBuffer[10];
+float value;
+float lux;
 static void TacheI2C_taskFxn(UArg a0, UArg a1)
 {
-    for(;;)
-    {
+    uint16_t        sample;
+    int16_t         light;
+
+    I2C_Handle      i2c;
+    I2C_Params      i2cParams;
+    I2C_Transaction i2cTransaction;
+
+    /* Call driver init functions */
+    GPIO_init();
+    I2C_init();
+
+    /* Create I2C for usage */
+    I2C_Params_init(&i2cParams);
+    i2cParams.bitRate = I2C_400kHz;
+    i2c = I2C_open(CONFIG_I2C_LIGHT, &i2cParams);
+    if (i2c == NULL) {
+        while (1);
     }
+
+    /* Common I2C transaction setup */
+
+        txBuffer[0] = 0x00;
+
+        i2cTransaction.writeBuf   = txBuffer;
+        i2cTransaction.writeCount = 1;
+        i2cTransaction.readBuf    = rxBuffer;
+        i2cTransaction.readCount  = 2;
+
+        i2cTransaction.slaveAddress = 0x44;
+
+        //1) Read Device ID
+        /*
+        if (I2C_transfer(i2c, &i2cTransaction)) {
+            //check id
+            dataSensor = rxBuffer[0];
+            dataSensor = dataSensor << 8 ;
+            dataSensor = dataSensor | rxBuffer[1];
+            slaveAddress = sensors.address;
+        }
+        */
+        /*
+        //If It is ok lets continue
+        //2) Config sensor
+        txBuffer[0] = 0x01;
+        txBuffer[1] = 0b11000110;
+        txBuffer[2] = 0b00010000;
+
+        i2cTransaction.writeBuf   = txBuffer;
+        i2cTransaction.writeCount = 3;
+        i2cTransaction.readBuf    = rxBuffer;
+        i2cTransaction.readCount  = 0;
+        */
+
+
+
+
+
+        for(;;){
+            if (I2C_transfer(i2c, &i2cTransaction)) {
+                //check id
+                dataSensor = (rxBuffer[0]>>4) & 0x0F ;
+
+                switch(dataSensor){
+                case 0: value = 0.01; break;
+                case 1: value = 0.02; break;
+                case 2: value = 0.04; break;
+                case 3: value = 0.08; break;
+                case 4: value = 0.16; break;
+                case 5: value = 0.32; break;
+                case 6: value = 0.64; break;
+                case 7: value = 1.28; break;
+                case 8: value = 2.56; break;
+                case 9: value = 5.12; break;
+                case 10: value = 10.24; break;
+                case 11: value = 20.48; break;
+                }
+
+                lux = 0.01*pow(2,value)*1000;
+            }
+            afficherDonneesLux(lux);
+                }
+
+        /*
+
+
+        if (slaveAddress == 0) {
+            I2C_close(i2c);
+            while (1);
+        }
+
+        i2cTransaction.slaveAddress = slaveAddress;
+
+        i2cTransaction.readCount  = 2;
+        for (sample = 0; sample < 20; sample++) {
+             if (I2C_transfer(i2c, &i2cTransaction)) {
+
+                        light = (rxBuffer[0] << 8) | (rxBuffer[1]);
+                        light *= 0.0078125;
+
+                        if (rxBuffer[0] & 0x80) {
+                            light |= 0xF000;
+                        }
+
+                    }
+                    sleep(1);
+                    }
+        */
+
+
+
 }
+
+
 
 
 void TacheI2C_CreateTask(void){
@@ -131,165 +235,9 @@ void TacheI2C_CreateTask(void){
     }
 
 //==============================================================
-void *mainThread(void *arg0)
-{
-    uint16_t        sample;
-    int16_t         temperature;
-    uint8_t         txBuffer[1];
-    uint8_t         rxBuffer[2];
-    I2C_Handle      i2c;
-    I2C_Params      i2cParams;
-    I2C_Transaction i2cTransaction;
-
-    /* Call driver init functions */
-    Display_init();
-    GPIO_init();
-    I2C_init();
 
 
 
-    /* Open the UART display for output */
-    display = Display_open(Display_Type_UART, NULL);
-    if (display == NULL) {
-        while (1);
-    }
-
-
-    Display_printf(display, 0, 0, "Starting the i2ctmp example\n");
-
-    /* Create I2C for usage */
-    I2C_Params_init(&i2cParams);
-    i2cParams.bitRate = I2C_400kHz;
-    i2c = I2C_open(CONFIG_I2C_LIGHT, &i2cParams);
-    if (i2c == NULL) {
-        Display_printf(display, 0, 0, "Error Initializing I2C\n");
-        while (1);
-    }
-    else {
-        Display_printf(display, 0, 0, "I2C Initialized!\n");
-    }
-
-    /* Common I2C transaction setup */
-    i2cTransaction.writeBuf   = txBuffer;
-    i2cTransaction.writeCount = 1;
-    i2cTransaction.readBuf    = rxBuffer;
-    i2cTransaction.readCount  = 2;
-
-
-    i2cTransaction.slaveAddress = 0x44;
-    txBuffer[0] = 0x7F;
-
-    if (I2C_transfer(i2c, &i2cTransaction)) {
-        dataSensor = rxBuffer[0];
-        dataSensor = dataSensor << 8 ;
-        dataSensor = dataSensor | rxBuffer[1];
-        slaveAddress = sensors.address;
-        Display_printf(display, 0, 0, "Detected TMP%s sensor with slave"
-        " address 0x%x", sensors.id, sensors.address);
-    }
-    else {
-        i2cErrorHandler(&i2cTransaction, display);
-    }
-
-
-
-    /*
-     * Determine which I2C sensors are present by querying known I2C
-     * slave addresses.
-     */
-
-
-    /* If we never assigned a slave address */
-    if (slaveAddress == 0) {
-        Display_printf(display, 0, 0, "Failed to detect a sensor!");
-        I2C_close(i2c);
-        while (1);
-    }
-
-    Display_printf(display, 0, 0, "\nUsing last known sensor for samples.");
-    i2cTransaction.slaveAddress = slaveAddress;
-
-    /* Take 20 samples and print them out onto the console */
-    i2cTransaction.readCount  = 2;
-    for (sample = 0; sample < 20; sample++) {
-        if (I2C_transfer(i2c, &i2cTransaction)) {
-            /*
-             * Extract degrees C from the received data;
-             * see TMP sensor datasheet
-             */
-            temperature = (rxBuffer[0] << 8) | (rxBuffer[1]);
-            temperature *= 0.0078125;
-
-            /*
-             * If the MSB is set '1', then we have a 2's complement
-             * negative value which needs to be sign extended
-             */
-            if (rxBuffer[0] & 0x80) {
-                temperature |= 0xF000;
-            }
-
-            Display_printf(display, 0, 0, "Sample %u: %d (C)",
-                sample, temperature);
-        }
-        else {
-            i2cErrorHandler(&i2cTransaction, display);
-        }
-
-        /* Sleep for 1 second */
-        sleep(1);
-    }
-
-    I2C_close(i2c);
-    Display_printf(display, 0, 0, "I2C closed!");
-
-    return (NULL);
-}
-
-/*
- *  ======== i2cErrorHandler ========
- */
-static void i2cErrorHandler(I2C_Transaction *transaction,
-    Display_Handle display)
-{
-    switch (transaction->status) {
-    case I2C_STATUS_TIMEOUT:
-        Display_printf(display, 0, 0, "I2C transaction timed out!");
-        break;
-    case I2C_STATUS_CLOCK_TIMEOUT:
-        Display_printf(display, 0, 0, "I2C serial clock line timed out!");
-        break;
-    case I2C_STATUS_ADDR_NACK:
-        Display_printf(display, 0, 0, "I2C slave address 0x%x not"
-            " acknowledged!", transaction->slaveAddress);
-        break;
-    case I2C_STATUS_DATA_NACK:
-        Display_printf(display, 0, 0, "I2C data byte not acknowledged!");
-        break;
-    case I2C_STATUS_ARB_LOST:
-        Display_printf(display, 0, 0, "I2C arbitration to another master!");
-        break;
-    case I2C_STATUS_INCOMPLETE:
-        Display_printf(display, 0, 0, "I2C transaction returned before completion!");
-        break;
-    case I2C_STATUS_BUS_BUSY:
-        Display_printf(display, 0, 0, "I2C bus is already in use!");
-        break;
-    case I2C_STATUS_CANCEL:
-        Display_printf(display, 0, 0, "I2C transaction cancelled!");
-        break;
-    case I2C_STATUS_INVALID_TRANS:
-        Display_printf(display, 0, 0, "I2C transaction invalid!");
-        break;
-    case I2C_STATUS_ERROR:
-        Display_printf(display, 0, 0, "I2C generic error!");
-        break;
-    default:
-        Display_printf(display, 0, 0, "I2C undefined error case!");
-        break;
-    }
-}
-
-//=============================================
 
 
 

@@ -109,9 +109,9 @@ static void TacheADC_taskFxn(UArg a0, UArg a1)
 
 
 
-            SaveDataToSend(accx*100, accy*100, accz*100, joyVer*10, joyHor*10);
-            Carte_enqueueMsg(PZ_MSG_ACCELEROMETRE, NULL);
-            afficherDonnees(accx, accy, accz);
+            //SaveDataToSend(accx*100, accy*100, accz*100, joyVer*10, joyHor*10);
+            //Carte_enqueueMsg(PZ_MSG_ACCELEROMETRE, NULL);
+            //afficherDonnees(accx, accy, accz);
             afficherDonneesJoy(joyVer, joyHor);
 
 
@@ -165,7 +165,7 @@ void Sampling(uint_least8_t Board_ADC_Number)
             }
         }
     }
-
+/*
     else{
 
     for (i = 0; i < ADC_SAMPLE_COUNT; i++)
@@ -189,6 +189,7 @@ void Sampling(uint_least8_t Board_ADC_Number)
         }
     }
     }
+    */
 
     ADC_close(adc);
 }

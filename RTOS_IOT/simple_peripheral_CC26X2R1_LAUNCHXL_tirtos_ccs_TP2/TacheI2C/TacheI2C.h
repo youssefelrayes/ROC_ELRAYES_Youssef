@@ -8,7 +8,7 @@
 #ifndef TACHEI2C_TACHEI2C_H_
 #define TACHEI2C_TACHEI2C_H_
 
-
+void TacheI2C_CreateTask(void);
 
 
 
